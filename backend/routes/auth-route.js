@@ -13,7 +13,7 @@ router.get(
   passport.authenticate("github", { failureRedirect: "/login" }),
   (req, res) => {
     console.log(req.user);
-    res.send("GitHub login successful");
+    res.redirect("http://localhost:5173/dashboard");
   }
 );
 
