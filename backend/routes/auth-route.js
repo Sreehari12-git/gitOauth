@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const passport = require("passport");
-
+require("dotenv").config()
 const router = Router();
 
 router.get(
@@ -10,10 +10,10 @@ router.get(
 
 router.get(
   "/callback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github"),
   (req, res) => {
     console.log(req.user);
-    res.redirect("http://localhost:5173/dashboard");
+    res.redirect(process.env.DASHBOARD);
   }
 );
 
