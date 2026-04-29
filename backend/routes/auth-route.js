@@ -12,10 +12,15 @@ router.get(
   "/callback",
   passport.authenticate("github"),
   (req, res) => {
-    console.log(req.user);
     res.redirect(process.env.DASHBOARD);
   }
 );
 
+router.get("/user",(req,res) => {
+  if(req.isAuthenticated()) {
+    return res.json({loggedIn : true, user: req.user});
+  }
+  res.json({loggedIn: false});
+})
 
 module.exports = router;
