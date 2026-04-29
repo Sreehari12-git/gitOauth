@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const passport = require("passport");
-
+require("dotenv").config()
 const router = Router();
 
 router.get(
@@ -10,12 +10,17 @@ router.get(
 
 router.get(
   "/callback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github"),
   (req, res) => {
-    console.log(req.user);
-    res.send("GitHub login successful");
+    res.redirect(process.env.DASHBOARD);
   }
 );
 
+router.get("/user",(req,res) => {
+  if(req.isAuthenticated()) {
+    return res.json({loggedIn : true, user: req.user});
+  }
+  res.json({loggedIn: false});
+})
 
 module.exports = router;
