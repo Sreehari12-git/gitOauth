@@ -23,4 +23,13 @@ router.get("/user",(req,res) => {
   res.json({loggedIn: false});
 })
 
+router.get("/logout", (req,res) => {
+  req.logout(() => {
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.redirect(process.env.FRONTEND_URL)
+    })
+  })
+})
+
 module.exports = router;
